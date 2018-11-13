@@ -1,4 +1,23 @@
 <div id = "page">
+<div id = "strip0">
+    <div class = "lefttic"></div>
+    <div class = "righttic">
+        <div id = "theta0box" class = "thetabox">$\theta_0$</div>
+    </div>
+</div>
+<div id = "strip1">
+    <div class = "lefttic"></div>
+    <div class = "righttic">
+        <div id = "theta1box" class = "thetabox">$\theta_1$</div>
+    </div>
+</div>
+<div id = "strip2">
+    <div class = "lefttic"></div>
+    <div class = "righttic">
+        <div id = "theta2box" class = "thetabox">$\theta_2$</div>
+    </div>
+</div>
+
 <table id = "linktable">
     <tr>
         <td>
@@ -41,8 +60,8 @@
 </table>
 </div>
 <script>
-theta0 = Math.PI/4;
-theta1 = Math.PI/4;
+theta0 = Math.PI/3;
+theta1 = Math.acos((1/Math.sqrt(3)));
 theta2 = Math.PI/4;
 
 linkimages = document.getElementById("linktable").getElementsByTagName("img");
@@ -72,7 +91,7 @@ for(var index = 0;index < linkimages.length;index++){
         var url = "filesaver.php";
         httpc.open("POST", url, true);
         httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-        httpc.send("data=" + data + "&filename=" + "json/duality.txt");//send text to filesaver.php
+        httpc.send("data=" + data + "&filename=" + "json/tangle.txt");//send text to filesaver.php
     }
     if(urlset && pathset){
         data = encodeURIComponent(JSON.stringify(duality,null,"    "));
@@ -88,24 +107,41 @@ for(var index = 0;index < linkimages.length;index++){
     }
     
     W = innerWidth;
-    for(var index = 0;index < duality.length;index++){
+    for(var index = 0;index < tangle.length;index++){
         var newimg = document.createElement("IMG");
         newimg.id = "i" + index.toString();
         newimg.className = "boximg";
         document.getElementById("page").appendChild(newimg);
-        newimg.src = duality[index].src;
-        newimg.style.left = (duality[index].x*W).toString() + "px";
-        newimg.style.top = (duality[index].y*W).toString() + "px";
-        newimg.style.width = (duality[index].w*W).toString() + "px";
-        newimg.style.transform = "rotate(" + duality[index].angle.toString() + "deg)";
+        newimg.src = tangle[index].src;
+        newimg.style.left = (tangle[index].x*W).toString() + "px";
+        newimg.style.top = (tangle[index].y*W).toString() + "px";
+        newimg.style.width = (tangle[index].w*W).toString() + "px";
+        newimg.style.transform = "rotate(" + tangle[index].angle.toString() + "deg)";
     }
 
 boxes = document.getElementById("page").getElementsByClassName("boximg");
-mc = new Hammer(document.getElementById("page"));
-mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-mc.on("panleft panright panup pandown tap press", function(ev) {
 
-    theta = Math.PI/4 +(ev.deltaX/200);
+mc0 = new Hammer(document.getElementById("strip0"));
+mc0.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+mc0.on("panleft panright panup pandown tap press", function(ev) {
+
+    theta0 = Math.PI/3 +(ev.deltaX/200);
+    redraw();
+
+});    
+mc1 = new Hammer(document.getElementById("strip1"));
+mc1.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+mc1.on("panleft panright panup pandown tap press", function(ev) {
+
+    theta1 = Math.acos((1/Math.sqrt(3))) +(ev.deltaX/200);
+    redraw();
+
+});    
+mc2 = new Hammer(document.getElementById("strip2"));
+mc2.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+mc2.on("panleft panright panup pandown tap press", function(ev) {
+
+    theta2 = Math.PI/3 +(ev.deltaX/200);
     redraw();
 
 });    
@@ -114,9 +150,18 @@ mc.on("panleft panright panup pandown tap press", function(ev) {
 redraw();
     
 function redraw(){
-    boxes[0].style.opacity = Math.cos(theta)*Math.cos(theta).toString();
-    boxes[1].style.opacity = Math.sin(theta)*Math.sin(theta).toString();
+    a = Math.cos(theta0);
+    b = Math.cos(theta1)*Math.sin(theta0);
+    c = Math.cos(theta2)*Math.sin(theta1)*Math.sin(theta0);
+    d = Math.sin(theta2)*Math.sin(theta1)*Math.sin(theta0);
     
+    boxes[0].style.opacity = (a*a).toString();
+    boxes[1].style.opacity = (b*b).toString();
+    boxes[2].style.opacity = (c*c).toString();
+    boxes[3].style.opacity = (d*d).toString();
+    document.getElementById("theta0box").style.transform = "rotate(" + (theta0).toString() + "rad)";
+    document.getElementById("theta1box").style.transform = "rotate(" + (theta1).toString() + "rad)";    
+    document.getElementById("theta2box").style.transform = "rotate(" + (theta2).toString() + "rad)";
 }
 </script>
 <style>
@@ -141,5 +186,51 @@ function redraw(){
 .boximg{
     position:absolute;
 }
-
+#strip0{
+    position:absolute;
+    z-index:10;
+    left:0px;
+    right:0px;
+    top:0px;
+    height:33%;
+}
+#strip1{
+    position:absolute;
+    z-index:10;
+    left:0px;
+    right:0px;
+    top:33%;
+    height:33%;
+}
+#strip2{
+    position:absolute;
+    z-index:10;
+    left:0px;
+    right:0px;
+    top:66%;
+    height:33%;
+}
+.lefttic{
+    position:absolute;
+    left:0px;
+    width:100px;
+    top:0px;
+    bottom:0px;
+    border-bottom:solid;
+}
+.righttic{
+    position:absolute;
+    right:0px;
+    width:100px;
+    top:0px;
+    bottom:0px;
+    border-bottom:solid;
+}
+.thetabox{
+    position:absolute;
+    top:30px;
+    right:50px;
+    border:solid;
+    padding:1em 1em 1em 1em;
+}
 </style>

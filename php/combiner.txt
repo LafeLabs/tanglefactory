@@ -156,26 +156,45 @@ echo $listtext;
             currentFile = path;
         }
         else{
-            currentFile = "json/duality.txt";
+            currentFile = "json/tangle.txt";
         }
         
-        topimage = {};
-        bottomimage = {};
-        topimage.src = document.getElementById("topimage").src;
-        bottomimage.src = document.getElementById("bottomimage").src;
-        topimage.x = 0.2;
-        topimage.y = 0.2;
-        topimage.w = 0.5;
-        topimage.angle = 0;
-        bottomimage.x = 0.2;
-        bottomimage.y = 0.2;
-        bottomimage.w = 0.5;
-        bottomimage.angle = 0;
-        duality =[];
-        duality.push(bottomimage);
-        duality.push(topimage);
+        image0 = {};
+        image1 = {};
+        image2 = {};
+        image3 = {};
         
-        data = encodeURIComponent(JSON.stringify(duality,null,"    "));
+        image0.src = document.getElementById("image0").src;
+        image1.src = document.getElementById("image1").src;
+        image2.src = document.getElementById("image2").src;
+        image3.src = document.getElementById("image3").src;
+        
+        
+        image0.x = 0.2;
+        image0.y = 0.2;
+        image0.w = 0.5;
+        image0.angle = 0;
+        image1.x = 0.2;
+        image1.y = 0.2;
+        image1.w = 0.5;
+        image1.angle = 0;
+        image2.x = 0.2;
+        image2.y = 0.2;
+        image2.w = 0.5;
+        image2.angle = 0;
+        image3.x = 0.2;
+        image3.y = 0.2;
+        image3.w = 0.5;
+        image3.angle = 0;
+        
+        
+        tangle =[];
+        tangle.push(image0);
+        tangle.push(image1);
+        tangle.push(image2);
+        tangle.push(image3);
+        
+        data = encodeURIComponent(JSON.stringify(tangle,null,"    "));
         var httpc = new XMLHttpRequest();
         var url = "filesaver.php";        
         httpc.open("POST", url, true);

@@ -36,7 +36,6 @@ EGO DEATH:
 <META NAME="robots" CONTENT="noindex,nofollow">
 
 <!-- links to MathJax JavaScript library, un-comment to use math-->
-<!--
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
@@ -49,7 +48,7 @@ EGO DEATH:
 		}
 	});//			MathJax.Hub.Typeset();//tell Mathjax to update the math
 </script>
--->
+
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
 </head>
 <body>
