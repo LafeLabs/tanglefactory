@@ -25,12 +25,12 @@ PUBLIC DOMAIN, NO COPYRIGHTS, NO PATENTS.
         echo file_get_contents($_GET['path']);
     }
     else{
-        echo file_get_contents("json/duality.txt");        
+        echo file_get_contents("json/tangle.txt");        
     }
 ?></div>
-<a id = "factorylink" href = "index.php" style = "position:absolute;left:10px;top:10px;z-index:4"><img src = "mapicons/dualityfactory.svg" style = "width:50px"></a>
+<a id = "factorylink" href = "index.php" style = "position:absolute;left:10px;top:10px;z-index:4"><img src = "mapicons/tanglefactory.svg" style = "width:50px"></a>
 
-<img id = "savebutton" class = "button" src = "mapicons/saveduality.svg" style = "width:80px;position:absolute;right:10px;top:10px;z-index:999999999"/>
+<img id = "savebutton" class = "button" src = "mapicons/savetangle.svg" style = "width:80px;position:absolute;right:10px;top:10px;z-index:999999999"/>
 
 <div id = "page"></div>
 <img id = "backbutton" class = "button" src = "mapicons/back.svg"/>
@@ -49,34 +49,34 @@ PUBLIC DOMAIN, NO COPYRIGHTS, NO PATENTS.
         pathset = false;
     }
 
-    duality = JSON.parse(document.getElementById("datadiv").innerHTML);
+    tangle = JSON.parse(document.getElementById("datadiv").innerHTML);
     W = innerWidth;
-    for(var index = 0;index < duality.length;index++){
+    for(var index = 0;index < tangle.length;index++){
         var newimg = document.createElement("IMG");
         newimg.id = "i" + index.toString();
         newimg.className = "boximg";
         document.getElementById("page").appendChild(newimg);
-        newimg.src = duality[index].src;
-        newimg.style.left = (duality[index].x*W).toString() + "px";
-        newimg.style.top = (duality[index].y*W).toString() + "px";
-        newimg.style.width = (duality[index].w*W).toString() + "px";
-        newimg.style.transform = "rotate(" + duality[index].angle.toString() + "deg)";
+        newimg.src = tangle[index].src;
+        newimg.style.left = (tangle[index].x*W).toString() + "px";
+        newimg.style.top = (tangle[index].y*W).toString() + "px";
+        newimg.style.width = (tangle[index].w*W).toString() + "px";
+        newimg.style.transform = "rotate(" + tangle[index].angle.toString() + "deg)";
     }
     boxes = document.getElementById("page").getElementsByClassName("boximg");
     mapIndex = 0;
     boxes[mapIndex].style.border = "solid";
     
-    x = duality[mapIndex].x;
-    y = duality[mapIndex].y;
-    w = duality[mapIndex].w;
-    angle = duality[mapIndex].angle;
+    x = tangle[mapIndex].x;
+    y = tangle[mapIndex].y;
+    w = tangle[mapIndex].w;
+    angle = tangle[mapIndex].angle;
     
 mc = new Hammer(document.getElementById("page"));
 mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 mc.on("panleft panright panup pandown tap press", function(ev) {
 
-    duality[mapIndex].x = (x*W + ev.deltaX)/W;
-    duality[mapIndex].y = (y*W + ev.deltaY)/W;
+    tangle[mapIndex].x = (x*W + ev.deltaX)/W;
+    tangle[mapIndex].y = (y*W + ev.deltaY)/W;
     
     boxes[mapIndex].style.left = (x*W + ev.deltaX).toString() + "px";
     boxes[mapIndex].style.top = (y*W + ev.deltaY).toString() + "px";
@@ -88,14 +88,14 @@ mc1 = new Hammer(document.getElementById("scalebar"));
 mc1.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 mc1.on("panleft panright panup pandown tap press", function(ev) {
     boxes[mapIndex].style.width = (ev.deltaX + w*W).toString() + "px";
-    duality[mapIndex].w = (ev.deltaX + w*W)/W;
+    tangle[mapIndex].w = (ev.deltaX + w*W)/W;
     
 });
 
 mc2 = new Hammer(document.getElementById("rotatebar"));
 mc2.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 mc2.on("panleft panright panup pandown tap press", function(ev) {
-    duality[mapIndex].angle = angle + ev.deltaX*Math.PI/10;
+    tangle[mapIndex].angle = angle + ev.deltaX*Math.PI/10;
     boxes[mapIndex].style.transform = "rotate(" + (angle + ev.deltaX*Math.PI/10).toString() + "deg)";
 
 
@@ -108,10 +108,10 @@ document.getElementById("fwdbutton").onclick = function(){
         mapIndex = 0;
     }
     boxes[mapIndex].style.border = "solid";
-    x = duality[mapIndex].x;
-    y = duality[mapIndex].y;
-    w = duality[mapIndex].w;
-    angle = duality[mapIndex].angle;
+    x = tangle[mapIndex].x;
+    y = tangle[mapIndex].y;
+    w = tangle[mapIndex].w;
+    angle = tangle[mapIndex].angle;
     savemap();
 }
 document.getElementById("backbutton").onclick = function(){
@@ -121,10 +121,10 @@ document.getElementById("backbutton").onclick = function(){
         mapIndex = boxes.length - 1;
     }
     boxes[mapIndex].style.border = "solid";
-    x = duality[mapIndex].x;
-    y = duality[mapIndex].y;
-    w = duality[mapIndex].w;
-    angle = duality[mapIndex].angle;
+    x = tangle[mapIndex].x;
+    y = tangle[mapIndex].y;
+    w = tangle[mapIndex].w;
+    angle = tangle[mapIndex].angle;
     savemap();
 }
 
@@ -134,10 +134,10 @@ function savemap(){
         currentFile = path;
     }
     else{
-        currentFile = "json/duality.txt";
+        currentFile = "json/tangle.txt";
     }
     
-    data = encodeURIComponent(JSON.stringify(duality,null,"    "));
+    data = encodeURIComponent(JSON.stringify(tangle,null,"    "));
     var httpc = new XMLHttpRequest();
     var url = "filesaver.php";        
     httpc.open("POST", url, true);
@@ -148,8 +148,8 @@ function savemap(){
 
 document.getElementById("savebutton").onclick = function(){
     timestamp = Math.round(Date.now()/1000).toString();
-    currentFile = "dualities/duality" + timestamp + ".txt";   
-    data = encodeURIComponent(JSON.stringify(duality,null,"    "));
+    currentFile = "tangles/tangle" + timestamp + ".txt";   
+    data = encodeURIComponent(JSON.stringify(tangle,null,"    "));
     var httpc = new XMLHttpRequest();
     var url = "filesaver.php";        
     httpc.open("POST", url, true);
@@ -207,7 +207,7 @@ input{
  .boximg{
      position:absolute;
      z-index:-1;
-     opacity:0.5;
+     opacity:0.25;
  }   
  #backbutton{
      position:absolute;

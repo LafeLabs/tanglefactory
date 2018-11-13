@@ -13,6 +13,7 @@
 			"imagefeed.txt",
 			"index.txt",
 			"replicator.txt",
+			"tanglefeed.txt",
 			"text2php.txt",
 			"upload.txt",
 			"uploader.txt"
@@ -30,7 +31,8 @@
 			"currentjson.txt",
 			"dna.txt",
 			"duality.txt",
-			"imgurls.txt"
+			"imgurls.txt",
+			"tangle.txt"
 		]
 	},
 	{
@@ -61,7 +63,11 @@
 			"mapeditor.svg",
 			"mapfactory.svg",
 			"saveduality.svg",
+			"savetangle.svg",
 			"scroll.svg",
+			"tangle.svg",
+			"tanglefactory.svg",
+			"tanglefeed.svg",
 			"uparrow.svg",
 			"upload.svg",
 			"uploader.svg"

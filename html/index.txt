@@ -47,7 +47,7 @@
             </a>
         </td>
         <td>
-            <a href = "dualityfeed.php">
+            <a href = "tanglefeed.php">
                 <img src = "mapicons/tanglefeed.svg"/>
             </a>
         </td>
