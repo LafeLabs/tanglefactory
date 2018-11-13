@@ -1,0 +1,30 @@
+[
+    {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Red_maple_leaf.jpg",
+        "x": 0.19926900584795323,
+        "y": 0.26140350877192986,
+        "w": 0.6549707602339181,
+        "angle": 42.097341558103224
+    },
+    {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/6/67/Maple_leaf_Fcb981.JPG",
+        "x": 0.2,
+        "y": 0.2,
+        "w": 0.5,
+        "angle": 0
+    },
+    {
+        "src": "https://i.imgur.com/uKrbCTU.jpg",
+        "x": 0.2,
+        "y": 0.2,
+        "w": 0.5,
+        "angle": 0
+    },
+    {
+        "src": "https://i.imgur.com/1xvgWlg.jpg",
+        "x": 0.2,
+        "y": 0.2,
+        "w": 0.5,
+        "angle": 0
+    }
+]

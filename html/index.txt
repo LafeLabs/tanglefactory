@@ -1,0 +1,145 @@
+<div id = "page">
+<table id = "linktable">
+    <tr>
+        <td>
+            <a href = "editor.php">
+                <img src = "mapicons/editor.svg"/>
+            </a>
+        </td>
+        <td>
+            <a href = "uploader.php">
+                <img src = "mapicons/uploader.svg"/>
+            </a>
+        </td>
+        <td>
+            <a href = "imagefeed.php">
+                <img src = "mapicons/imagefeed.svg"/>
+            </a>
+        </td>
+
+        <td>
+            <a id = "linkerlink" href = "combiner.php">
+                <img src = "mapicons/combiner.svg"/>
+            </a>
+        </td>
+        <td>
+            <a id = "alignerlink" href = "aligner.php">
+                <img src = "mapicons/aligner2.svg"/>
+            </a>
+        </td>
+        <td>
+            <a href = "dualityfeed.php">
+                <img src = "mapicons/tanglefeed.svg"/>
+            </a>
+        </td>
+        <td>
+            <a href = "copy.php">
+                <img src = "mapicons/copy.svg"/>
+            </a>
+        </td>
+    </tr>
+</table>
+</div>
+<script>
+theta0 = Math.PI/4;
+theta1 = Math.PI/4;
+theta2 = Math.PI/4;
+
+linkimages = document.getElementById("linktable").getElementsByTagName("img");
+for(var index = 0;index < linkimages.length;index++){
+    linkimages[index].style.width = (innerWidth/16).toString() + "px";
+}
+
+    tangle = JSON.parse(document.getElementById("datadiv").innerHTML);
+    url = document.getElementById("urldiv").innerHTML;
+    path = document.getElementById("pathdiv").innerHTML;
+    if(path.length > 1){
+        pathset = true;
+    }
+    else{
+        pathset = false;
+    }
+    if(url.length > 1){
+        urlset = true;
+    }
+    else{
+        urlset = false;
+    }
+    
+    if(urlset && !pathset){
+        data = encodeURIComponent(JSON.stringify(duality,null,"    "));
+        var httpc = new XMLHttpRequest();
+        var url = "filesaver.php";
+        httpc.open("POST", url, true);
+        httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+        httpc.send("data=" + data + "&filename=" + "json/duality.txt");//send text to filesaver.php
+    }
+    if(urlset && pathset){
+        data = encodeURIComponent(JSON.stringify(duality,null,"    "));
+        var httpc = new XMLHttpRequest();
+        var url = "filesaver.php";
+        httpc.open("POST", url, true);
+        httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+        httpc.send("data=" + data + "&filename=" + path);//send text to filesaver.php
+    }    
+    if(pathset){
+        document.getElementById("linkerlink").href += "?path=" + path; 
+        document.getElementById("alignerlink").href += "?path=" + path; 
+    }
+    
+    W = innerWidth;
+    for(var index = 0;index < duality.length;index++){
+        var newimg = document.createElement("IMG");
+        newimg.id = "i" + index.toString();
+        newimg.className = "boximg";
+        document.getElementById("page").appendChild(newimg);
+        newimg.src = duality[index].src;
+        newimg.style.left = (duality[index].x*W).toString() + "px";
+        newimg.style.top = (duality[index].y*W).toString() + "px";
+        newimg.style.width = (duality[index].w*W).toString() + "px";
+        newimg.style.transform = "rotate(" + duality[index].angle.toString() + "deg)";
+    }
+
+boxes = document.getElementById("page").getElementsByClassName("boximg");
+mc = new Hammer(document.getElementById("page"));
+mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+mc.on("panleft panright panup pandown tap press", function(ev) {
+
+    theta = Math.PI/4 +(ev.deltaX/200);
+    redraw();
+
+});    
+
+
+redraw();
+    
+function redraw(){
+    boxes[0].style.opacity = Math.cos(theta)*Math.cos(theta).toString();
+    boxes[1].style.opacity = Math.sin(theta)*Math.sin(theta).toString();
+    
+}
+</script>
+<style>
+#linktable{
+    position:absolute;
+    left:0px;
+    top:0px;
+    z-index:9999999;
+}
+#linktable img{
+    width:40px;
+    background-color:white;
+}
+#page{
+    position:absolute;    
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    z-index:2;
+}
+.boximg{
+    position:absolute;
+}
+
+</style>
