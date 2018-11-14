@@ -5,7 +5,7 @@
     $dna =json_decode($dnaraw);
     $baseurl = explode("json",$url)[0];
 
-    mkdir("dualities");
+    mkdir("tangles");
     mkdir("uploadimages");
 
     //sources
